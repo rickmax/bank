@@ -1,10 +1,11 @@
 class WithdrawsController < ApplicationController
   before_action :set_withdraw, only: [:show, :edit, :update, :destroy]
+  before_action :check_balance, only: [:create]
 
   # GET /withdraws
   # GET /withdraws.json
   def index
-    @withdraws = Withdraw.all
+    @withdraws = current_user.account.withdraws
   end
 
   # GET /withdraws/1
@@ -24,7 +25,7 @@ class WithdrawsController < ApplicationController
   # POST /withdraws
   # POST /withdraws.json
   def create
-    @withdraw = Withdraw.new(withdraw_params)
+    @withdraw = current_user.account.withdraws.new(withdraw_params)
 
     respond_to do |format|
       if @withdraw.save
@@ -62,6 +63,17 @@ class WithdrawsController < ApplicationController
   end
 
   private
+    def check_balance
+      @withdraw = current_user.account.withdraws.new(withdraw_params)
+      last_balance = current_user.account.get_balance
+      if @withdraw.amount.to_f > last_balance
+        @withdraw.errors.add(:message, "Insuficient founds to withdraw")
+        respond_to do |format|
+          format.html { render :edit }
+          format.json { render json: @withdraw.errors, status: :unprocessable_entity }
+        end
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_withdraw
       @withdraw = Withdraw.find(params[:id])
