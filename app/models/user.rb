@@ -5,7 +5,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   after_create :create_account
 
-  has_one: :account
+  belongs_to :user, dependent: :destroy
+  has_many :deposits
+  has_many :withdraws
+  has_many :transfers
+  has_many :balances
 
   def create_account
     Account.create(user_id: self.id)
