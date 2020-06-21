@@ -4,12 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   after_create :create_account
-
-  belongs_to :user, dependent: :destroy
-  has_many :deposits
-  has_many :withdraws
-  has_many :transfers
-  has_many :balances
+  
+  has_one :account
 
   def create_account
     Account.create(user_id: self.id)
