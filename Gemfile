@@ -38,6 +38,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Authentication Settings
 gem 'devise'
 gem 'devise-bootstrap-views'
+gem 'rails-i18n'
 gem 'devise-i18n'
 
 # Bootstrap
