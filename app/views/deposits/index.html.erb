@@ -17,7 +17,7 @@
       <tr>
         <td><%= link_to deposit.id, deposit_path(deposit) %></td>
         <td><%= deposit.account_id %></td>
-        <td><%= deposit.amount %></td>
+        <td><%= Extenso.real_formatado( deposit.amount ) %></td>
         <td><%=l deposit.created_at %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),

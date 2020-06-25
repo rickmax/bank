@@ -18,7 +18,7 @@
       <tr>
         <td><%= link_to transfer.id, transfer_path(transfer) %></td>
         <td><%= transfer.account_id %></td>
-        <td><%= transfer.amount %></td>
+        <td><%= Extenso.real_formatado( transfer.amount ) %></td>
         <td><%= transfer.account_to %></td>
         <td><%=l transfer.created_at %></td>
         <td>

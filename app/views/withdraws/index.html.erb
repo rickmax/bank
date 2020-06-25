@@ -17,7 +17,7 @@
       <tr>
         <td><%= link_to withdraw.id, withdraw_path(withdraw) %></td>
         <td><%= withdraw.account_id %></td>
-        <td><%= withdraw.amount %></td>
+        <td><%= Extenso.real_formatado( withdraw.amount ) %></td>
         <td><%=l withdraw.created_at %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),

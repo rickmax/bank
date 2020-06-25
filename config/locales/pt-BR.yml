@@ -1,6 +1,28 @@
 ---
     pt-BR:
       activerecord:
+        models:
+          wellcome:
+            one: Início
+            sign_out: Sair
+            sign_in: Entrar
+          deposit:
+            one: Depósito
+            others: Depósitos
+          withdraw:
+            one: Saque
+            others: Saques
+          transfer:
+            one: Transferência
+            others: Transferências
+          balance:
+            one: Extrato
+            others: Extratos
+        attributes:
+          deposit:
+            amount: valor
+            created_at: criado em
+            account_id: conta
         errors:
           messages:
             record_invalid: 'A validação falhou: %{errors}'
@@ -145,6 +167,13 @@
             one: 'Não foi possível gravar %{model}: 1 erro'
             other: 'Não foi possível gravar %{model}: %{count} erros'
       helpers:
+        actions: ações
+        links:
+          show: mostrar
+          edit: editar
+          destroy: excluir
+          new: novo
+          back: voltar
         select:
           prompt: Por favor selecione
         submit:

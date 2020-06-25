@@ -41,6 +41,9 @@ gem 'devise-bootstrap-views'
 gem 'rails-i18n'
 gem 'devise-i18n'
 
+# Change money to real
+gem 'extensobr'
+
 # Bootstrap
 gem "therubyracer"
 gem "less-rails"
