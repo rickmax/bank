@@ -3,7 +3,7 @@ class Deposit < ApplicationRecord
   has_many :balances
   after_save :increment_balance
 
-  validates :amount, numericality: true, presence: true
+  validates :amount, :numericality => { :greater_than_or_equal_to => 1 }, presence: true
 
   def increment_balance
     BankOperations.increment(self.id, self.class.name, self.amount)
