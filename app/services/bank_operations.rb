@@ -19,7 +19,6 @@ module BankOperations
   end
 
   def self.increment(id, kind, amount)
-    puts "\n\n\nIncrement"
     if kind == "Transfer"
       operation = Transfer.create(account_id: id, amount: amount, account_to: id)
     else
