@@ -12,7 +12,7 @@ FactoryBot.define do
   end
 
   factory :account do
-    user_id { 1 }
+    user { 1 }
   end
 
   factory :account2 do
