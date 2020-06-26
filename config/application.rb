@@ -26,6 +26,9 @@ module Bankmax
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+    
+    config.eager_load_paths << Rails.root.join('lib')
+    config.autoload_paths += Dir.glob("#{config.root}/app/services/*")
 
     # Don't generate system test files.
     config.generators.system_tests = nil
