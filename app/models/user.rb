@@ -7,6 +7,8 @@ class User < ApplicationRecord
   
   has_one :account
 
+  validates :email, uniqueness: true
+
   def create_account
     Account.create(user_id: self.id)
   end
