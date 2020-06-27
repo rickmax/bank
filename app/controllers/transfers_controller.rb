@@ -1,6 +1,7 @@
 class TransfersController < ApplicationController
   before_action :set_transfer, only: [:show, :edit, :update, :destroy]
   before_action :verify_transfer, only: [:create]
+  before_action :check_account_to, only: [:create]
 
   # GET /transfers
   # GET /transfers.json
@@ -76,6 +77,17 @@ class TransfersController < ApplicationController
         end
       elsif account_to.nil?
         @transfer.errors.add(:message, "Account not found")
+        respond_to do |format|
+          format.html { render :edit }
+          format.json { render json: @transfer.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+
+    def check_account_to
+      @transfer = current_user.account.transfers.new(transfer_params)
+      if @transfer.account_to.to_i == current_user.account.id
+        @transfer.errors.add(:message, "Impossible transfer to self account")
         respond_to do |format|
           format.html { render :edit }
           format.json { render json: @transfer.errors, status: :unprocessable_entity }

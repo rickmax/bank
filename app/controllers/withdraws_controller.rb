@@ -74,6 +74,8 @@ class WithdrawsController < ApplicationController
         end
       end
     end
+
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_withdraw
       @withdraw = Withdraw.find(params[:id])
