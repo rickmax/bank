@@ -7,7 +7,7 @@
 ### Rails version
     5.2.4
 ### System dependencies
-    pstgresql
+    postgresql
 ### Database creation
     rails db:create db:migrate
 ### How to run the test suite
