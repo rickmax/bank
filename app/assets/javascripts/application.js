@@ -16,7 +16,7 @@
 //= require_tree .
 
 function moeda(a, e, r, t) {
-    let n = ""
+    var n = ""
       , h = j = 0
       , u = tamanho2 = 0
       , l = ajd2 = ""
