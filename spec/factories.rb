@@ -1,4 +1,8 @@
 FactoryBot.define do
+  factory :bank do
+    name { "MyString" }
+  end
+
   factory :user do
     email { "rick@max.com" }
     password  { "123456" }

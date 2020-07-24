@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :banks
   get 'balance/index'
   post 'balance/index'
   resources :transfers
