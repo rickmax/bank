@@ -18,11 +18,17 @@
           balance:
             one: Extrato
             others: Extratos
+          bank:
+            one: Banco
+            others: Bancos
         attributes:
           deposit:
-            amount: valor
-            created_at: criado em
-            account_id: conta
+            amount: Valor
+            created_at: Criado em
+            account_id: Conta
+          bank:
+            name: Nome
+            created_at: Criado em
         errors:
           messages:
             record_invalid: 'A validação falhou: %{errors}'
