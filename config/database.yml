@@ -1,28 +1,16 @@
 default: &default
   adapter: postgresql
-  encoding: utf8
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  encoding: unicode
+  host: db
+  username: postgres
+  password: password
+  pool: 5
 
 development:
   <<: *default
-  reconnect: false
   database: bankmax_development
-  pool: 5
-  host: localhost
-  username: postgres
-  password: 12345678
+
 
 test:
   <<: *default
-  reconnect: false
   database: bankmax_test
-  pool: 5
-  host: localhost
-  username: postgres
-  password: 12345678
-
-production:
-  <<: *default
-  database: bankmax_production
-  username: bankmax
-  password: <%= ENV['BANKMAX_DATABASE_PASSWORD'] %>
