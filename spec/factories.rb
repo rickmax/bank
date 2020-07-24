@@ -1,4 +1,20 @@
 FactoryBot.define do
+  factory :city do
+    name { "MyString" }
+    capital { "MyString" }
+    state { nil }
+  end
+
+  factory :state do
+    name { "MyString" }
+    acronym { "MyString" }
+    region { nil }
+  end
+
+  factory :region do
+    name { "MyString" }
+  end
+
   factory :bank do
     name { "MyString" }
   end
