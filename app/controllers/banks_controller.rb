@@ -16,7 +16,6 @@ class BanksController < ApplicationController
   def new
     @bank = Bank.new
     @states = State.all
-    @cities = City.all
   end
 
   # GET /banks/1/edit
@@ -27,12 +26,13 @@ class BanksController < ApplicationController
   # POST /banks.json
   def create
     @bank = Bank.new(bank_params)
-
+    @bank.city_id = City.find_by(id: params[:bank_city].to_i).id
     respond_to do |format|
       if @bank.save
         format.html { redirect_to @bank, notice: 'Bank was successfully created.' }
         format.json { render :show, status: :created, location: @bank }
       else
+        @states = State.all
         format.html { render :new }
         format.json { render json: @bank.errors, status: :unprocessable_entity }
       end
@@ -67,11 +67,10 @@ class BanksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_bank
       @bank = Bank.find(params[:id])
-      @cities = City.all
     end
 
     # Only allow a list of trusted parameters through.
     def bank_params
-      params.require(:bank).permit(:name)
+      params.require(:bank).permit(:name, :city)
     end
 end

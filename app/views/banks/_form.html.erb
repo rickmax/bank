@@ -32,7 +32,7 @@
   <div class="form-group">
     <%= f.label :city, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <select name="city" id="bank_city_id" class="form-control">
+      <select name="bank_city" id="bank_city" name="bank[city]" class="form-control">
         <option value="0">Escolha um estado</option> 
       </select>
     </div>
@@ -56,7 +56,7 @@
       url: "/state/get_cities/"+state,
       type: "GET",
       success: function(data) {
-        var selectCities = document.getElementById("bank_city_id");
+        var selectCities = document.getElementById("bank_city");
         var citesOptions = data;
         selectCities.removeChild( selectCities.options[0] );
         data.cities.forEach(populateCities);
@@ -64,7 +64,7 @@
     });
   }
   function populateCities(city) {
-    var selectCities = document.getElementById("bank_city_id");
+    var selectCities = document.getElementById("bank_city");
     var opt = document.createElement('option');
     opt.appendChild( document.createTextNode(city.name) );
     opt.value = city.id; 
