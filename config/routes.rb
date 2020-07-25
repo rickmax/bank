@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'state/get_cities/:id', to: "state#get_cities"
   resources :banks
   get 'balance/index'
   post 'balance/index'

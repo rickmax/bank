@@ -15,6 +15,8 @@ class BanksController < ApplicationController
   # GET /banks/new
   def new
     @bank = Bank.new
+    @states = State.all
+    @cities = City.all
   end
 
   # GET /banks/1/edit
@@ -65,6 +67,7 @@ class BanksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_bank
       @bank = Bank.find(params[:id])
+      @cities = City.all
     end
 
     # Only allow a list of trusted parameters through.

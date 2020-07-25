@@ -23,6 +23,22 @@
     <%=f.error_span(:name) %>
   </div>
   <div class="form-group">
+    <%= f.label :state, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= collection_select(:state, :state_id, @states, :id, :name, {:prompt=>true}, {:class=>'form-control', :onchange => 'getCities()'}) %>
+    </div>
+    <%=f.error_span(:name) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :city, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <select name="city" id="bank_city_id" class="form-control">
+        <option value="0">Escolha um estado</option> 
+      </select>
+    </div>
+    <%=f.error_span(:name) %>
+  </div>
+  <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to 'Voltar', wellcome_index_path, :class => 'btn btn-warning' %>
@@ -32,3 +48,26 @@
   </div>
 
 <% end %>
+
+<script>
+  function getCities() {
+    state = document.getElementById("state_state_id").value;
+    Rails.ajax({
+      url: "/state/get_cities/"+state,
+      type: "GET",
+      success: function(data) {
+        var selectCities = document.getElementById("bank_city_id");
+        var citesOptions = data;
+        selectCities.removeChild( selectCities.options[0] );
+        data.cities.forEach(populateCities);
+      }
+    });
+  }
+  function populateCities(city) {
+    var selectCities = document.getElementById("bank_city_id");
+    var opt = document.createElement('option');
+    opt.appendChild( document.createTextNode(city.name) );
+    opt.value = city.id; 
+    selectCities.add(opt);
+  }
+</script>
