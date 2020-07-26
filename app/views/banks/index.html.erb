@@ -2,11 +2,20 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
+<form role="form" action="banks">
+  <h2 class="">Buscar Bancos</h2>
+  <input type="text" class="form-control" placeholder="Ex: Belo Horizonte" name="keywords">
+  <br>
+  <button class="btn btn-primary btn-block" type="submit">Procurar</button>
+  <br>
+</form>
 <table class="table table-striped">
   <thead>
     <tr>
       <th><%=t model_class.human_attribute_name(:id) %></th>
       <th><%=t model_class.human_attribute_name(:name) %></th>
+      <th><%=t model_class.human_attribute_name(:city) %></th>
+      <th><%=t model_class.human_attribute_name(:state) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -16,6 +25,8 @@
       <tr>
         <td><%= link_to bank.id, bank_path(bank) %></td>
         <td><%= bank.name %></td>
+        <td><%= bank.try(:city).try(:name) %></td>
+        <td><%= bank.try(:city).try(:state).try(:acronym) %></td>
         <td><%=l bank.created_at %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),

@@ -4,7 +4,11 @@ class BanksController < ApplicationController
   # GET /banks
   # GET /banks.json
   def index
-    @banks = Bank.all
+    if params[:keywords].present?
+      @banks = Bank.search params[:keywords], operator: "or", page: params[:page]
+    else
+      @banks = Bank.all
+    end
   end
 
   # GET /banks/1
