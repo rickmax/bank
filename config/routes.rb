@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'state/get_cities/:id', to: "state#get_cities"
+
+  mount Sidekiq::Web => '/sidekiq'
   resources :banks
   get 'balance/index'
   post 'balance/index'
@@ -8,7 +9,9 @@ Rails.application.routes.draw do
   resources :deposits
   resources :accounts
   devise_for :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: "wellcome#index"
   get 'wellcome/index'
+  get 'state/get_cities/:id', to: "state#get_cities"
+
+
 end

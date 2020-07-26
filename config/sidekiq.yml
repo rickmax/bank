@@ -1,0 +1,9 @@
+:verbose: true
+:concurrency: 2
+:timeout: 7200
+:queues:
+  - critical
+  - default
+  - <%= `hostname`.strip %>
+  - low
+  - mailers
