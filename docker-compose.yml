@@ -6,6 +6,28 @@ services:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
+      
+  redis:
+    image: 'redis:4.0-alpine'
+    command: redis-server --requirepass yourpassword
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+    container_name: elasticsearch01
+    environment:
+      - node.name=elasticsearch01
+      - cluster.name=elasticsearch-docker-cluster
+      - discovery.seed_hosts=elasticsearch02,elasticsearch03
+      - cluster.initial_master_nodes=elasticsearch01,elasticsearch02,elasticsearch03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+
   web:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -15,19 +37,28 @@ services:
       - "3000:3000"
     depends_on:
       - db
-  es01:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
-    container_name: es01
-    environment:
-      - node.name=es01
-      - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=es02,es03
-      - cluster.initial_master_nodes=es01,es02,es03
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+      - redis
+      - elasticsearch
+
+  sidekiq:
+    depends_on:
+      - 'db'
+      - 'redis'
+    build: .
+    command: sidekiq -C config/sidekiq.yml.erb
+    volumes:
+      - '.:/app'
+    env_file:
+      - '.env'
+
+  cable:
+    depends_on:
+      - 'redis'
+    build: .
+    command: puma -p 28080 cable/config.ru
     ports:
-      - 9200:9200
+      - '28080:28080'
+    volumes:
+      - '.:/app'
+    env_file:
+      - '.env'
