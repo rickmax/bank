@@ -10,6 +10,7 @@ namespace :dev do
             show_spinner("Add accounts...") { %x(rails dev:add_accounts)}
             show_spinner("Populate Cities...") { %x(rails dev:populate_cities)}
             show_spinner("Create Banks...") { %x(rails dev:add_banks)}
+            show_spinner("Reindex Banks...") { %x(rails dev:reindex_banks)}
         end
         if Rails.env.production?
             show_spinner("Run migrations DB...","done)") { %x(rails db:migrate)}
@@ -17,6 +18,7 @@ namespace :dev do
             show_spinner("Add accounts...") { %x(rails dev:add_accounts)}
             show_spinner("Populate Cities...") { %x(rails dev:populate_cities)}
             show_spinner("Create Banks...") { %x(rails dev:add_banks)}
+            show_spinner("Reindex Banks...") { %x(rails dev:reindex_banks)}
         end
     end
   
@@ -43,6 +45,11 @@ namespace :dev do
     desc "Add Banks"
     task add_banks: :environment do
         City.all.each { |x| Bank.create( name: Faker::Bank.name, city: x ) }
+    end
+
+    desc "Add Banks"
+    task add_banks: :environment do
+        Bank.reindex
     end
     
     private
