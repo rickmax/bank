@@ -16,8 +16,9 @@ RSpec.describe "/banks", type: :request do
 
   before(:all) do
     @region = create(:region)
-    @state = create(:state)
-    @city = create(:city)
+    @state = create(:state, region: @region)
+    @city = create(:city, state: @state)
+    @bank = create(:bank, city: @city)
   end
   # Bank. As you add validations to Bank, be sure to
   # adjust the attributes here as well.
@@ -33,8 +34,15 @@ RSpec.describe "/banks", type: :request do
     it "renders a successful response" do
       Bank.create! valid_attributes
       get banks_url
-      byebug
-      expect(response).to be_successful
+      expect(response).to have_http_status(302)
+    end
+
+    it "include banks response" do
+      banks = create_list(:bank, 5)
+      get banks_url
+      banks.each do |bank|
+        expect(response.body).to include(bank.name)
+      end
     end
   end
 

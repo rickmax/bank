@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe City, type: :model do
   before(:all) do
-    region = create(:region)
-    state = create(:state, region: region)
-    @city = create(:city, state: state)
+    @city = create(:city)
   end
   
   it "is valid with valid attributes" do
