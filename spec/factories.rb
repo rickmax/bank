@@ -1,22 +1,44 @@
 FactoryBot.define do
   factory :city do
-    name { "MyString" }
-    capital { "MyString" }
-    state { nil }
+    name { "city1" }
+    capital { "capital1" }
+    state_id { 1 }
+  end
+
+  factory :city2 do
+    name { "city2" }
+    capital { "capital2" }
+    state_id { 2 }
   end
 
   factory :state do
-    name { "MyString" }
-    acronym { "MyString" }
-    region { nil }
+    name { "state1" }
+    acronym { "st1" }
+    region_id { 1 }
+  end
+
+  factory :state2 do
+    name { "state2" }
+    acronym { "st2" }
+    region_id { 2 }
   end
 
   factory :region do
-    name { "MyString" }
+    name { "region1" }
+  end
+
+  factory :region2 do
+    name { "region2" }
   end
 
   factory :bank do
-    name { "MyString" }
+    name { "bank1" }
+    city_id { 1 }
+  end
+
+  factory :bank2 do
+    name { "bank2" }
+    city_id { 2 }
   end
 
   factory :user do
