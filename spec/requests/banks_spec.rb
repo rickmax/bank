@@ -88,50 +88,31 @@ RSpec.describe "/banks", type: :request do
         expect(response).to redirect_to(bank_url(Bank.last))
       end
     end
-
-  #   context "with invalid parameters" do
-  #     it "does not create a new Bank" do
-  #       expect {
-  #         post banks_url, params: { bank: invalid_attributes }
-  #       }.to change(Bank, :count).by(0)
-  #     end
-
-  #     it "renders a successful response (i.e. to display the 'new' template)" do
-  #       post banks_url, params: { bank: invalid_attributes }
-  #       expect(response).to be_successful
-  #     end
-  #   end
   end
 
-  # describe "PATCH /update" do
-  #   context "with valid parameters" do
-  #     let(:new_attributes) {
-  #       skip("Add a hash of attributes valid for your model")
-  #     }
+  describe "PATCH /update" do
+    context "with valid parameters" do
+      let(:new_attributes) {
+        { name: 'bank2', city_id: @city.id }
+      }
 
-  #     it "updates the requested bank" do
-  #       bank = Bank.create! valid_attributes
-  #       patch bank_url(bank), params: { bank: new_attributes }
-  #       bank.reload
-  #       skip("Add assertions for updated state")
-  #     end
+      it "updates the requested bank" do
+        sign_in @user
+        bank = Bank.create! valid_attributes
+        patch bank_url(bank), params: { bank: new_attributes }
+        bank.reload
+        expect(bank).to have_attributes(:name => "bank2")
+      end
 
-  #     it "redirects to the bank" do
-  #       bank = Bank.create! valid_attributes
-  #       patch bank_url(bank), params: { bank: new_attributes }
-  #       bank.reload
-  #       expect(response).to redirect_to(bank_url(bank))
-  #     end
-  #   end
-
-  #   context "with invalid parameters" do
-  #     it "renders a successful response (i.e. to display the 'edit' template)" do
-  #       bank = Bank.create! valid_attributes
-  #       patch bank_url(bank), params: { bank: invalid_attributes }
-  #       expect(response).to be_successful
-  #     end
-  #   end
-  # end
+      it "redirects to the bank" do
+        sign_in @user
+        bank = Bank.create! valid_attributes
+        patch bank_url(bank), params: { bank: new_attributes }
+        bank.reload
+        expect(response).to redirect_to(bank_url(bank))
+      end
+    end
+  end
 
   # describe "DELETE /destroy" do
   #   it "destroys the requested bank" do
