@@ -55,28 +55,23 @@ RSpec.describe "/banks", type: :request do
     end
   end
 
-  # describe "GET /show" do
-  #   it "renders a successful response" do
-  #     bank = Bank.create! valid_attributes
-  #     get bank_url(bank)
-  #     expect(response).to be_successful
-  #   end
-  # end
+  describe "GET /show" do
+    it "renders a successful response" do
+      bank = Bank.create! valid_attributes
+      sign_in @user
+      get bank_url(bank)
+      expect(response).to be_successful
+    end
+  end
 
-  # describe "GET /new" do
-  #   it "renders a successful response" do
-  #     get new_bank_url
-  #     expect(response).to be_successful
-  #   end
-  # end
-
-  # describe "GET /edit" do
-  #   it "render a successful response" do
-  #     bank = Bank.create! valid_attributes
-  #     get edit_bank_url(bank)
-  #     expect(response).to be_successful
-  #   end
-  # end
+  describe "GET /new" do
+    it "renders a successful response" do
+      sign_in @user
+      @states = State.all
+      get new_bank_url(@bank)
+      expect(response).to be_successful
+    end
+  end
 
   # describe "POST /create" do
   #   context "with valid parameters" do
