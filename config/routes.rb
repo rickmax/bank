@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post 'balance/index'
   resources :transfers
   resources :withdraws
-  resources :deposits, only: [:index, :show, :new]
+  resources :deposits, only: [:index, :show, :new, :create]
   resources :accounts
   devise_for :users
   root to: "wellcome#index"

@@ -1,8 +1,4 @@
 FactoryBot.define do
-  
-  factory :account do
-    user { 1 }
-  end
 
   factory :deposit do
     account_id { 1 }

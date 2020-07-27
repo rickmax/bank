@@ -18,8 +18,8 @@ RSpec.describe "/deposits", type: :request do
   before(:all) do
     @user1 = create(:user)
     @user2 = create(:user)
-    @account1 = create(:account)
-    @account2 = create(:account)
+    @account1 = create(:account, user: @user1)
+    @account2 = create(:account, user: @user2)
   end
   # Bank. As you add validations to Bank, be sure to
   # adjust the attributes here as well.
@@ -29,104 +29,62 @@ RSpec.describe "/deposits", type: :request do
   let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
 
   let(:valid_attributes) {
-    {amount: 'bank1', city_id: @city.id}
+    {amount: 100.00, account: @user1.account}
   }
 
   let(:invalid_attributes) {
-    {name: 'bank1'}
+    {amount: nil, account: nil}
   }
 
   describe "GET /index" do
     it "renders a successful response" do
-      Bank.create! valid_attributes
-      sign_in @user
-      get banks_url
+      Deposit.create! valid_attributes
+      sign_in @user1
+      get deposits_url
       expect(response).to have_http_status(200)
     end
 
-    it "include banks response" do
-      banks = create_list(:bank, 5)
-      sign_in @user
-      get banks_url
-      banks.each do |bank|
-        expect(response.body).to include(bank.name)
+    it "include deposits response" do
+      deposits = create_list(:deposit, 5)
+      sign_in @user1
+      get deposits_url
+      deposits.each do |deposit|
+        expect(deposit).to have_attributes(:amount => 100.00)
       end
     end
   end
 
   describe "GET /show" do
     it "renders a successful response" do
-      bank = Bank.create! valid_attributes
-      sign_in @user
-      get bank_url(bank)
+      deposit = Deposit.create! valid_attributes
+      sign_in @user1
+      get deposit_url(deposit)
       expect(response).to be_successful
     end
   end
 
   describe "GET /new" do
     it "renders a successful response" do
-      sign_in @user
-      @states = State.all
-      get new_bank_url(@bank)
+      sign_in @user1
+      get new_deposit_url(@deposit)
       expect(response).to be_successful
     end
   end
 
   describe "POST /create" do
     context "with valid parameters" do
-      it "creates a new Bank" do
-        sign_in @user
+      it "creates a new deposit" do
+        sign_in @user1
         expect {
-          post banks_url, params: { bank: {name: 'bank1', city_id: @city.id} }
-        }.to change(Bank, :count).by(1)
+          post deposits_url, params: { deposit: {amount: 50.00} }
+        }.to change(Deposit, :count).by(1)
       end
 
       it "redirects to the created bank" do
-        sign_in @user
-        post banks_url, params: { bank: {name: 'bank1', city_id: @city.id} }
-        expect(response).to redirect_to(bank_url(Bank.last))
+        sign_in @user1
+        post deposits_url, params: { deposit: {amount: 100.00} }
+        expect(response).to redirect_to(deposit_url(Deposit.last))
       end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        { name: 'bank2', city_id: @city.id }
-      }
-
-      it "updates the requested bank" do
-        sign_in @user
-        bank = Bank.create! valid_attributes
-        patch bank_url(bank), params: { bank: new_attributes }
-        bank.reload
-        expect(bank).to have_attributes(:name => "bank2")
-      end
-
-      it "redirects to the bank" do
-        sign_in @user
-        bank = Bank.create! valid_attributes
-        patch bank_url(bank), params: { bank: new_attributes }
-        bank.reload
-        expect(response).to redirect_to(bank_url(bank))
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested bank" do
-      sign_in @user
-      bank = Bank.create! valid_attributes
-      expect {
-        delete bank_url(bank)
-      }.to change(Bank, :count).by(-1)
-    end
-
-    it "redirects to the banks list" do
-      sign_in @user
-      bank = Bank.create! valid_attributes
-      delete bank_url(bank)
-      expect(response).to redirect_to(banks_url)
     end
   end
 end
