@@ -2,13 +2,22 @@ namespace :dev do
   
     desc "Set enverionment"
     task setup: :environment do
-        # show_spinner("Destroy DB...","done)") { %x(rails db:drop)}
-        # show_spinner("Create DB...","done)") { %x(rails db:create)}
-        # show_spinner("Run migrations DB...","done)") { %x(rails db:migrate)}
-        # show_spinner("Add users...") { %x(rails dev:add_users)}
-        # show_spinner("Add accounts...") { %x(rails dev:add_accounts)}
-        # show_spinner("Populate Cities...") { %x(rails dev:populate_cities)}
-        show_spinner("Create Banks...") { %x(rails dev:add_banks)}
+        if Rails.env.development?
+            show_spinner("Destroy DB...","done)") { %x(rails db:drop)}
+            show_spinner("Create DB...","done)") { %x(rails db:create)}
+            show_spinner("Run migrations DB...","done)") { %x(rails db:migrate)}
+            show_spinner("Add users...") { %x(rails dev:add_users)}
+            show_spinner("Add accounts...") { %x(rails dev:add_accounts)}
+            show_spinner("Populate Cities...") { %x(rails dev:populate_cities)}
+            show_spinner("Create Banks...") { %x(rails dev:add_banks)}
+        end
+        if Rails.env.production?
+            show_spinner("Run migrations DB...","done)") { %x(rails db:migrate)}
+            show_spinner("Add users...") { %x(rails dev:add_users)}
+            show_spinner("Add accounts...") { %x(rails dev:add_accounts)}
+            show_spinner("Populate Cities...") { %x(rails dev:populate_cities)}
+            show_spinner("Create Banks...") { %x(rails dev:add_banks)}
+        end
     end
   
     desc "Add Users"
