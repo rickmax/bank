@@ -114,18 +114,20 @@ RSpec.describe "/banks", type: :request do
     end
   end
 
-  # describe "DELETE /destroy" do
-  #   it "destroys the requested bank" do
-  #     bank = Bank.create! valid_attributes
-  #     expect {
-  #       delete bank_url(bank)
-  #     }.to change(Bank, :count).by(-1)
-  #   end
+  describe "DELETE /destroy" do
+    it "destroys the requested bank" do
+      sign_in @user
+      bank = Bank.create! valid_attributes
+      expect {
+        delete bank_url(bank)
+      }.to change(Bank, :count).by(-1)
+    end
 
-  #   it "redirects to the banks list" do
-  #     bank = Bank.create! valid_attributes
-  #     delete bank_url(bank)
-  #     expect(response).to redirect_to(banks_url)
-  #   end
-  # end
+    it "redirects to the banks list" do
+      sign_in @user
+      bank = Bank.create! valid_attributes
+      delete bank_url(bank)
+      expect(response).to redirect_to(banks_url)
+    end
+  end
 end
