@@ -5,9 +5,9 @@ class BanksController < ApplicationController
   # GET /banks.json
   def index
     if params[:keywords].present?
-      @banks = Bank.search params[:keywords], operator: "or", page: params[:page]
+      @banks = Bank.search params[:keywords], operator: "or", page: params[:page], per_page: 100
     else
-      @banks = Bank.all
+      @banks = Bank.all.paginate(page: params[:page], per_page: 100)
     end
   end
 

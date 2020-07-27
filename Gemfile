@@ -48,6 +48,8 @@ gem 'extensobr'
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 
 # Search Hard
 gem 'searchkick'

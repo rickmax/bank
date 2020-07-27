@@ -3,8 +3,8 @@
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
 <form role="form" action="banks">
-  <h2 class="">Buscar Bancos</h2>
-  <input type="text" class="form-control" placeholder="Ex: Belo Horizonte" name="keywords">
+  <h3 class="">Buscar Bancos por nome ou cidade</h2>
+  <input type="text" class="form-control" placeholder="Ex: Belo Horizonte ou ALLIED BANK" name="keywords">
   <br>
   <button class="btn btn-primary btn-block" type="submit">Procurar</button>
   <br>
@@ -43,6 +43,9 @@
     <% end %>
   </tbody>
 </table>
+<div class="text-center">
+  <%= will_paginate @banks, renderer: BootstrapPagination::Rails %>
+</div>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_bank_path,
