@@ -30,7 +30,7 @@ RSpec.describe "/banks", type: :request do
   let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
 
   let(:valid_attributes) {
-    {name: 'bank1', city_id: 1}
+    {name: 'bank1', city_id: @city.id}
   }
 
   let(:invalid_attributes) {
@@ -73,19 +73,21 @@ RSpec.describe "/banks", type: :request do
     end
   end
 
-  # describe "POST /create" do
-  #   context "with valid parameters" do
-  #     it "creates a new Bank" do
-  #       expect {
-  #         post banks_url, params: { bank: valid_attributes }
-  #       }.to change(Bank, :count).by(1)
-  #     end
+  describe "POST /create" do
+    context "with valid parameters" do
+      it "creates a new Bank" do
+        sign_in @user
+        expect {
+          post banks_url, params: { bank: {name: 'bank1', city_id: @city.id} }
+        }.to change(Bank, :count).by(1)
+      end
 
-  #     it "redirects to the created bank" do
-  #       post banks_url, params: { bank: valid_attributes }
-  #       expect(response).to redirect_to(bank_url(Bank.last))
-  #     end
-  #   end
+      it "redirects to the created bank" do
+        sign_in @user
+        post banks_url, params: { bank: {name: 'bank1', city_id: @city.id} }
+        expect(response).to redirect_to(bank_url(Bank.last))
+      end
+    end
 
   #   context "with invalid parameters" do
   #     it "does not create a new Bank" do
@@ -99,7 +101,7 @@ RSpec.describe "/banks", type: :request do
   #       expect(response).to be_successful
   #     end
   #   end
-  # end
+  end
 
   # describe "PATCH /update" do
   #   context "with valid parameters" do

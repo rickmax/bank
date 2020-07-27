@@ -30,7 +30,7 @@ class BanksController < ApplicationController
   # POST /banks.json
   def create
     @bank = Bank.new(bank_params)
-    @bank.city_id = City.find_by(id: params[:bank_city].to_i).id
+    @bank.city_id = City.find_by(id: params[:bank_city].to_i).id if params[:bank_city].present?
     respond_to do |format|
       if @bank.save
         format.html { redirect_to @bank, notice: 'Bank was successfully created.' }
@@ -75,6 +75,6 @@ class BanksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def bank_params
-      params.require(:bank).permit(:name, :city)
+      params.require(:bank).permit(:name, :city_id)
     end
 end
