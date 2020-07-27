@@ -2,7 +2,7 @@ require "rails_helper"
 RSpec.describe Withdraw, :type => :model do
   
   before(:all) do
-    @user = create(:user, email: 'withdraw@example.com')
+    @user = create(:user)
     @account = create(:account, user: @user)
     @withdraw1 = create(:withdraw)
   end
