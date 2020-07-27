@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   resources :banks
   get 'balance/index'
   post 'balance/index'
-  resources :transfers
-  resources :withdraws
+  resources :transfers, only: [:index, :show, :new, :create]
+  resources :withdraws, only: [:index, :show, :new, :create]
   resources :deposits, only: [:index, :show, :new, :create]
   resources :accounts
   devise_for :users
