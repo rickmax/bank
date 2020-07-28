@@ -1,6 +1,7 @@
 # Bankmax
 
 ## The Bankmax is a backend application to test bank operations like deposit, transfer and withdraw.
+
 ## Features
 * Abstract Modules to busines roles
 * Autorization and Autentication roles
@@ -10,6 +11,12 @@
 * Internationalization
 * Automatized tests
 * Setup docker
+
+## Business Roles
+* Transactions tax
+    - Transfers weekdays business hours = R$ 5,00;
+    - Transfers weekdays non business hours = R$ 7,00;
+    - Transfers when amount greater than a thousand reals = R$ 15,00;
 
 ### Ruby version
     2.6.6
@@ -29,7 +36,7 @@
 * docker-compose
     $ docker-compose up --build
 
-### Deploymen
+### Deploy
     heroku
 ### Application links
 * Demo:  https://bankmax.herokuapp.com 
